@@ -1,0 +1,135 @@
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+  font-family: Inter, ui-rounded, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: #071a2f;
+  color: #fff;
+  touch-action: none;
+}
+
+body {
+  display: grid;
+  place-items: center;
+}
+
+.game-shell {
+  position: relative;
+  width: min(100vw, 520px);
+  height: 100dvh;
+  max-height: 980px;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 50% 0%, rgba(116, 229, 255, 0.22), transparent 38%),
+    linear-gradient(#0d4065, #082741 58%, #071a2f);
+}
+
+canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.hud {
+  position: absolute;
+  z-index: 4;
+  left: 14px;
+  right: 14px;
+  top: max(14px, env(safe-area-inset-top));
+  display: flex;
+  justify-content: space-between;
+  font-size: 18px;
+  font-weight: 800;
+  pointer-events: none;
+  text-shadow: 0 2px 8px rgba(0,0,0,.45);
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: rgba(2, 16, 31, 0.58);
+  backdrop-filter: blur(7px);
+}
+
+.overlay.visible {
+  display: flex;
+}
+
+.panel {
+  width: min(100%, 390px);
+  padding: 28px 24px;
+  text-align: center;
+  border: 1px solid rgba(255,255,255,.18);
+  border-radius: 28px;
+  background: rgba(7, 30, 50, .88);
+  box-shadow: 0 24px 70px rgba(0,0,0,.38);
+}
+
+.hero-icon {
+  font-size: 58px;
+  margin-bottom: 8px;
+}
+
+h1, h2 {
+  margin: 0 0 12px;
+  letter-spacing: .04em;
+}
+
+h1 {
+  font-size: clamp(36px, 11vw, 58px);
+}
+
+h2 {
+  font-size: 32px;
+}
+
+p {
+  line-height: 1.45;
+  color: #d7f6ff;
+}
+
+.small {
+  opacity: .75;
+  font-size: 14px;
+}
+
+button {
+  width: 100%;
+  margin-top: 12px;
+  border: 0;
+  border-radius: 999px;
+  padding: 16px 20px;
+  font-size: 18px;
+  font-weight: 900;
+  color: #08233a;
+  background: linear-gradient(180deg, #fff39b, #ffc857);
+  box-shadow: 0 8px 24px rgba(255, 200, 87, .22);
+  cursor: pointer;
+}
+
+button:active {
+  transform: scale(.985);
+}
+
+.controls-hint {
+  position: absolute;
+  z-index: 3;
+  bottom: max(14px, env(safe-area-inset-bottom));
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-size: 12px;
+  opacity: .55;
+  pointer-events: none;
+}

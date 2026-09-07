@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="theme-color" content="#071a2f" />
+  <title>Bloomtail</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="game-shell">
+    <canvas id="gameCanvas" aria-label="Bloomtail mobile game"></canvas>
+
+    <section id="startScreen" class="overlay visible">
+      <div class="panel">
+        <div class="hero-icon">🌺🧜‍♀️</div>
+        <h1>BLOOMTAIL</h1>
+        <p>Guide a magical flower with a mermaid tail through the Moonlit Reef.</p>
+        <p class="small">Collect sun drops. Dodge jellyfish. Survive as long as you can.</p>
+        <button id="startButton">Tap to Swim</button>
+      </div>
+    </section>
+
+    <section id="gameOverScreen" class="overlay">
+      <div class="panel">
+        <h2>Current Swept Away</h2>
+        <p>Score: <strong id="finalScore">0</strong></p>
+        <p>Best: <strong id="bestScore">0</strong></p>
+        <button id="restartButton">Swim Again</button>
+      </div>
+    </section>
+
+    <div class="hud">
+      <div>☀️ <span id="score">0</span></div>
+      <div>❤️ <span id="lives">3</span></div>
+    </div>
+
+    <div class="controls-hint">Drag anywhere to steer</div>
+  </main>
+
+  <script src="game.js"></script>
+</body>
+</html>
