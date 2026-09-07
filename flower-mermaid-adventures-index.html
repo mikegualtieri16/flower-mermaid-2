@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
+<title>Flower Mermaid Adventures in the Sea</title>
+<style>
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;font-family:system-ui,-apple-system,sans-serif;background:#bdeff5;color:#123}
+body{overflow-x:hidden}.wrap{max-width:900px;margin:auto;padding:10px}.game{background:#eafcff;border:2px solid #73cbd6;border-radius:22px;overflow:hidden;box-shadow:0 8px 30px #0002}
+header{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:12px 15px;background:#fff}.title{font-weight:900;font-size:clamp(16px,4vw,24px)}.stats{display:flex;gap:7px;flex-wrap:wrap;justify-content:flex-end}.pill{background:#effbff;border:1px solid #9bdbe3;border-radius:999px;padding:6px 9px;font-weight:800;font-size:13px}
+#sea{position:relative;height:min(68vh,560px);min-height:390px;overflow:hidden;background:linear-gradient(#8be5f3 0%,#37b9d0 58%,#167d9f 100%);touch-action:none}
+.sunbeam{position:absolute;top:-80px;width:120px;height:390px;background:#fff3;transform:rotate(17deg)}.s1{left:8%}.s2{left:47%;transform:rotate(-12deg)}.s3{left:82%;transform:rotate(15deg)}
+.bubble{position:absolute;border:2px solid #ffffff66;border-radius:50%;animation:rise 5s infinite ease-in}.b1{width:14px;height:14px;left:12%;bottom:18%}.b2{width:9px;height:9px;left:73%;bottom:28%;animation-delay:1.5s}.b3{width:20px;height:20px;left:88%;bottom:13%;animation-delay:2.5s}
+@keyframes rise{to{transform:translateY(-260px);opacity:0}}
+.seafloor{position:absolute;left:-5%;bottom:-35px;width:110%;height:120px;background:#d8c982;border-radius:50% 50% 0 0/45% 45% 0 0}.coral{position:absolute;bottom:52px;font-size:48px;z-index:2}
+#player{position:absolute;left:50%;top:52%;width:92px;height:112px;transform:translate(-50%,-50%);z-index:8;text-align:center;user-select:none;filter:drop-shadow(0 6px 3px #034b5a66);cursor:grab}.flower{font-size:61px;line-height:58px;display:block}.face{position:absolute;top:18px;left:50%;transform:translateX(-50%);font-size:24px}.tail{font-size:63px;line-height:54px;display:block;margin-top:-2px}
+.item{position:absolute;z-index:5;border:0;background:transparent;font-size:38px;padding:5px;cursor:pointer;filter:drop-shadow(0 3px 2px #0003);transition:.15s}.item:active{transform:scale(.9)}.item.gone{display:none}
+#goal{position:absolute;right:5%;bottom:54px;font-size:54px;z-index:3;cursor:pointer}.goal-label{position:absolute;right:4%;bottom:30px;background:#fffddcdd;border-radius:12px;padding:3px 7px;font-weight:900;font-size:11px;z-index:4}
+.basket{position:absolute;left:calc(50% + 34px);top:calc(52% + 25px);font-size:31px;z-index:9;pointer-events:none;transform:rotate(-8deg)}
+.fish-item{position:absolute;z-index:5;border:0;background:transparent;font-size:38px;padding:5px;cursor:pointer;filter:drop-shadow(0 3px 2px #0003);transition:.15s}.fish-item:active{transform:scale(.9)}.fish-item.gone{display:none}
+
+.msg{position:absolute;z-index:20;top:12px;left:50%;transform:translateX(-50%);background:#fffffff0;border-radius:18px;padding:8px 13px;font-size:13px;font-weight:900;white-space:nowrap;max-width:90%;overflow:hidden;text-overflow:ellipsis}
+.controls{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:12px;background:#fff}.controls button{min-height:52px;border:1px solid #8bcfd8;border-radius:15px;background:#effcff;font-size:17px;font-weight:900;touch-action:manipulation}.controls .special{background:#fff0a8}.controls .reset{background:#ffd5eb}
+.help{padding:9px 13px;background:#f8feff;text-align:center;font-size:12px;color:#35606a}
+.overlay{position:absolute;inset:0;background:#ffffffd9;z-index:30;display:none;align-items:center;justify-content:center;text-align:center;padding:25px}.overlay.show{display:flex}.card{background:#fff;border:2px solid #7eced8;border-radius:24px;padding:25px;max-width:420px;box-shadow:0 8px 25px #0002}.card h2{margin:0 0 8px;font-size:28px}.card p{margin:8px 0 18px}.card button{border:0;border-radius:15px;padding:13px 22px;font-size:17px;font-weight:900;background:#ffd0e8}
+@media(max-width:520px){.wrap{padding:0}.game{border-radius:0}.title{font-size:16px}.pill{font-size:12px;padding:5px 7px}.controls button{min-height:48px;font-size:15px}#player{transform:translate(-50%,-50%) scale(.9)}}
+@media(prefers-reduced-motion:reduce){.bubble{animation:none}}
+</style>
+</head>
+<body>
+<div class="wrap"><div class="game">
+<header><div class="title">🌸 Flower Mermaid Adventures</div><div class="stats"><span class="pill">🌺 <b id="flowers">0</b>/10</span><span class="pill">🐠 <b id="fish">0</b>/5</span><span class="pill">⭐ <b id="score">0</b></span></div></header>
+<div id="sea" aria-label="Underwater adventure game">
+<div class="sunbeam s1"></div><div class="sunbeam s2"></div><div class="sunbeam s3"></div>
+<div class="bubble b1"></div><div class="bubble b2"></div><div class="bubble b3"></div>
+<div class="msg" id="msg" aria-live="polite">Swim around and collect 10 magical flowers! 🌸</div>
+<div class="seafloor"></div><div class="coral" style="left:3%">🪸</div><div class="coral" style="left:88%">🪸</div>
+<div id="goal">🏝️</div><div class="goal-label">CORAL GARDEN</div>
+<div id="player" aria-label="Flower mermaid"><span class="flower">🌸</span><span class="face">😊</span><span class="tail">🧜‍♀️</span></div>
+<div class="basket" aria-hidden="true">🧺</div>
+<div class="overlay" id="win"><div class="card"><h2>🌈 You did it!</h2><p>The Flower Mermaid saved the Coral Garden!<br>All the magical flowers and fish are safe!<br><b id="finalScore"></b></p><button id="again">🌺 Play Again</button></div></div>
+</div>
+<div class="controls">
+<button data-dir="left">⬅️</button><button data-dir="up">⬆️</button><button data-dir="right">➡️</button>
+<button data-dir="down">⬇️</button><button class="special" id="magic">✨ Magic Search</button><button class="reset" id="reset">🔄 Restart</button>
+</div><div class="help">💡 Tip: You can also drag the flower mermaid with your finger!</div>
+</div></div>
+<script>
+(()=>{const sea=document.getElementById('sea'),p=document.getElementById('player'),flowersEl=document.getElementById('flowers'),scoreEl=document.getElementById('score'),msg=document.getElementById('msg'),win=document.getElementById('win'),finalScore=document.getElementById('finalScore');let x=50,y=52,n=0,fish=0,score=0,drag=false;const spots=[[15,25],[35,18],[70,22],[86,34],[23,55],[52,70],[78,62],[42,45],[65,52],[88,72]],icons=['🌷','🌺','🌼','🪻','🌹','🌸','🌻','🌷','🌺','🌼'];const fishSpots=[[25,36],[61,31],[82,48],[38,62],[68,73]],fishIcons=['🐠','🐟','🐡','🐠','🐟'];let items=[],fishItems=[];
+function makeItems(){items.forEach(e=>e.remove());fishItems.forEach(e=>e.remove());items=[];fishItems=[];spots.forEach((a,i)=>{let b=document.createElement('button');b.className='item';b.type='button';b.textContent=icons[i];b.style.left=a[0]+'%';b.style.top=a[1]+'%';b.setAttribute('aria-label','Magical flower');b.addEventListener('click',()=>collect(b));sea.appendChild(b);items.push(b)});fishSpots.forEach((a,i)=>{let b=document.createElement('button');b.className='fish-item';b.type='button';b.textContent=fishIcons[i];b.style.left=a[0]+'%';b.style.top=a[1]+'%';b.setAttribute('aria-label','Collect fish with basket');b.addEventListener('click',()=>collectFish(b));sea.appendChild(b);fishItems.push(b)})}
+function collect(b){if(b.classList.contains('gone'))return;b.classList.add('gone');n++;score+=10;flowersEl.textContent=n;scoreEl.textContent=score;if(n===10)msg.textContent='🌟 Flowers complete! Now collect 5 fish with your basket! 🧺';else msg.textContent='🌸 Flower collected! '+n+'/10';checkGoal()}
+function collectFish(b){if(b.classList.contains('gone'))return;b.classList.add('gone');fish++;score+=20;document.getElementById('fish').textContent=fish;scoreEl.textContent=score;if(fish===5)msg.textContent='🐠 You collected all the fish! Now swim to the Coral Garden! 🏝️';else msg.textContent='🐟 Fish safely collected in your basket! '+fish+'/5';checkGoal()}
+function pos(){p.style.left=x+'%';p.style.top=y+'%';const basket=document.querySelector('.basket');basket.style.left='calc('+x+'% + 34px)';basket.style.top='calc('+y+'% + 25px)';items.forEach(b=>{if(b.classList.contains('gone'))return;let bx=parseFloat(b.style.left),by=parseFloat(b.style.top);if(Math.hypot(x-bx,y-by)<8)collect(b)});fishItems.forEach(b=>{if(b.classList.contains('gone'))return;let bx=parseFloat(b.style.left),by=parseFloat(b.style.top);if(Math.hypot(x-bx,y-by)<9)collectFish(b)});checkGoal()}
+function checkGoal(){if(n===10&&fish===5&&Math.hypot(x-88,y-68)<12){score+=50;scoreEl.textContent=score;finalScore.textContent='Final score: '+score+' ⭐';win.classList.add('show')}}
+function move(d){let q=5;if(d==='left')x=Math.max(6,x-q);if(d==='right')x=Math.min(94,x+q);if(d==='up')y=Math.max(14,y-q);if(d==='down')y=Math.min(75,y+q);pos()}
+document.querySelectorAll('[data-dir]').forEach(b=>b.addEventListener('click',()=>move(b.dataset.dir)));
+document.getElementById('magic').addEventListener('click',()=>{let best=null,dist=999;items.forEach(b=>{if(!b.classList.contains('gone')){let d=Math.hypot(x-parseFloat(b.style.left),y-parseFloat(b.style.top));if(d<dist){dist=d;best=b}}});if(best){let bx=parseFloat(best.style.left),by=parseFloat(best.style.top);x+=Math.max(-5,Math.min(5,bx-x));y+=Math.max(-5,Math.min(5,by-y));pos();msg.textContent='✨ Magic Search pulled you toward a flower!'}})
+function reset(){x=50;y=52;n=0;fish=0;score=0;flowersEl.textContent=0;document.getElementById('fish').textContent=0;scoreEl.textContent=0;msg.textContent='Swim around, collect 10 magical flowers and 5 fish! 🌸🐠';win.classList.remove('show');makeItems();pos()}
+document.getElementById('reset').addEventListener('click',reset);document.getElementById('again').addEventListener('click',reset);
+sea.addEventListener('pointerdown',e=>{if(e.target.closest('.item')||e.target.closest('button')||e.target.closest('.overlay'))return;drag=true;sea.setPointerCapture(e.pointerId);dragTo(e)});
+sea.addEventListener('pointermove',e=>{if(drag)dragTo(e)});sea.addEventListener('pointerup',()=>drag=false);sea.addEventListener('pointercancel',()=>drag=false);
+function dragTo(e){let r=sea.getBoundingClientRect();x=Math.max(6,Math.min(94,(e.clientX-r.left)/r.width*100));y=Math.max(14,Math.min(75,(e.clientY-r.top)/r.height*100));pos()}
+document.addEventListener('keydown',e=>{if(e.key==='ArrowLeft')move('left');if(e.key==='ArrowRight')move('right');if(e.key==='ArrowUp')move('up');if(e.key==='ArrowDown')move('down')});
+makeItems();pos();
+})();
+</script>
+</body>
+</html>
